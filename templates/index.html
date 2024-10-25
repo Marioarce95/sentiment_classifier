@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clasificador de Sentimientos de Tweets</title>
+    <style>
+        body {
+            background-color: #121212; /* Color de fondo oscuro */
+            color: #ffffff; /* Color de texto claro */
+            font-family: Arial, sans-serif; /* Tipografía moderna */
+            margin: 0; /* Sin márgenes */
+            padding: 20px; /* Espaciado interno */
+            display: flex;
+            justify-content: center; /* Centrar contenido horizontalmente */
+            align-items: center; /* Centrar contenido verticalmente */
+            height: 100vh; /* Altura completa de la ventana */
+        }
+
+        .container {
+            background-color: #1e1e1e; /* Fondo del contenedor */
+            border-radius: 8px; /* Bordes redondeados */
+            padding: 20px; /* Espaciado interno del contenedor */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Sombra sutil */
+            width: 90%; /* Ancho máximo del contenedor */
+            max-width: 600px; /* Ancho máximo */
+        }
+
+        h1 {
+            font-size: 24px; /* Tamaño de fuente del encabezado */
+            margin-bottom: 20px; /* Espaciado inferior */
+        }
+
+        label {
+            display: block; /* Mostrar etiqueta en bloque */
+            margin-bottom: 8px; /* Espaciado inferior */
+        }
+
+        textarea {
+            width: 100%; /* Ancho completo */
+            padding: 10px; /* Espaciado interno */
+            border: none; /* Sin borde */
+            border-radius: 4px; /* Bordes redondeados */
+            background-color: #2a2a2a; /* Fondo del textarea */
+            color: #ffffff; /* Color de texto del textarea */
+            resize: none; /* Sin opción de redimensionar */
+        }
+
+        textarea:focus {
+            outline: none; /* Sin contorno al enfocar */
+            background-color: #3a3a3a; /* Fondo más claro al enfocar */
+        }
+
+        input[type="submit"] {
+            background-color: #007bff; /* Color de fondo del botón */
+            color: white; /* Color del texto del botón */
+            border: none; /* Sin borde */
+            border-radius: 4px; /* Bordes redondeados */
+            padding: 10px 15px; /* Espaciado interno */
+            cursor: pointer; /* Cambiar cursor a puntero */
+            font-size: 16px; /* Tamaño de fuente del botón */
+            transition: background-color 0.3s; /* Transición suave */
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3; /* Color de fondo al pasar el ratón */
+        }
+
+        h2 {
+            margin-top: 20px; /* Espaciado superior */
+        }
+
+        p {
+            margin-top: 10px; /* Espaciado superior */
+            color: #cccccc; /* Color de texto del párrafo */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Clasificador de Sentimientos de Tweets</h1>
+        <form method="POST">
+            <label for="tweet">Ingresa un tweet en inglés:</label>
+            <textarea name="tweet" id="tweet" rows="4" cols="50" required></textarea>
+            <input type="submit" value="Analizar Sentimiento">
+        </form>
+        
+        {% if sentiment %}
+            <h2>Resultado: {{ sentiment }}</h2>
+            <p>Tweet: {{ tweet }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
