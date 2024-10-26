@@ -75,6 +75,7 @@
             color: #cccccc; /* Color de texto del párrafo */
         }
     </style>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -89,6 +90,13 @@
             <h2>Resultado: {{ sentiment }}</h2>
             <p>Tweet: {{ tweet }}</p>
         {% endif %}
+        
+        <div id="pca-graph"></div>
     </div>
+    
+    <script>
+        var graphJSON = {{ graph_json | safe }};
+        Plotly.newPlot('pca-graph', graphJSON.data, graphJSON.layout);
+    </script>
 </body>
 </html>

@@ -16,8 +16,12 @@ data.columns = ['polarity', 'id', 'date', 'query', 'user', 'tweet']
 X = data['tweet']
 y = data['polarity'].apply(lambda x: 1 if x == 4 else 0)
 
+# Después de cargar los datos
+sample_size = 100000  # Ajusta este número según sea necesario
+data = data.sample(n=sample_size, random_state=42)
+
 # Preprocesamiento de texto y vectorización con TF-IDF
-vectorizer = TfidfVectorizer(max_features=5000)
+vectorizer = TfidfVectorizer(max_features=1000)  # Reducir de 5000 a 1000
 X_vectorized = vectorizer.fit_transform(X)
 
 # Dividir los datos en entrenamiento y prueba
@@ -32,6 +36,10 @@ joblib.dump(model, 'sentiment_model.pkl')
 joblib.dump(vectorizer, 'tfidf_vectorizer.pkl')
 
 # Llamar a la función para realizar PCA y visualizar
-realizar_pca_y_visualizar(X_vectorized, y)
+graph_json = realizar_pca_y_visualizar(X_vectorized, y)
 
-print("Modelo y vectorizador guardados con éxito.")
+# Guardar los datos del gráfico en un archivo
+with open('pca_graph.json', 'w') as f:
+    f.write(graph_json)
+
+print("Modelo, vectorizador y datos del gráfico guardados con éxito.")

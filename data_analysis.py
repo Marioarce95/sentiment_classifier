@@ -1,17 +1,20 @@
 import pandas as pd
-from sklearn.decomposition import PCA
-import matplotlib.pyplot as plt
+from sklearn.decomposition import TruncatedSVD
+import plotly.express as px
+import json
+import plotly
 
 def realizar_pca_y_visualizar(X_vectorized, y):
-    # Aplicar PCA para reducir a 2 componentes principales
-    pca = PCA(n_components=2)
-    X_pca = pca.fit_transform(X_vectorized.toarray())
+    # Usar TruncatedSVD en lugar de PCA para manejar matrices dispersas
+    svd = TruncatedSVD(n_components=2, random_state=42)
+    X_pca = svd.fit_transform(X_vectorized)
 
-    # Visualizar los datos en 2D
-    plt.figure(figsize=(8, 6))
-    plt.scatter(X_pca[:, 0], X_pca[:, 1], c=y, cmap='viridis', alpha=0.5)
-    plt.title('Visualización de Tweets usando PCA')
-    plt.xlabel('Componente Principal 1')
-    plt.ylabel('Componente Principal 2')
-    plt.colorbar(label='Sentimiento')
-    plt.show()
+    # Crear el gráfico con Plotly
+    df = pd.DataFrame(data=X_pca, columns=['PC1', 'PC2'])
+    df['Sentiment'] = ['Positive' if s == 1 else 'Negative' for s in y]
+    fig = px.scatter(df, x='PC1', y='PC2', color='Sentiment',
+                     title='Visualización de Tweets usando SVD')
+
+    # Convertir la figura a JSON
+    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    return graphJSON
